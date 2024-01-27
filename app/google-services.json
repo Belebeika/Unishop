@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "749925631251",
+    "project_id": "unitazes",
+    "storage_bucket": "unitazes.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:749925631251:android:b2c155a8d46964062646e6",
+        "android_client_info": {
+          "package_name": "com.example.unishop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_zbNERK29uNYxfZwi-h0zfGi68vD8Ppg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
