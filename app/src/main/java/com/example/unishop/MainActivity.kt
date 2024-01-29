@@ -15,6 +15,7 @@ import com.example.unishop.data.ToiletCategory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.FirebaseDatabase
 import com.squareup.picasso.Picasso
+import android.graphics.Typeface
 
 class MainActivity : AppCompatActivity() {
 
@@ -117,25 +118,61 @@ class MainActivity : AppCompatActivity() {
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
                 )
+                setBackgroundResource(R.drawable.border) // Добавлено: задаем границу
+                setPadding(10, 10, 10, 10) // Добавлено: задаем отступы
             }
 
             val imgView = ImageView(this).apply {
                 layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
+                    0, // Изменено на 0
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    1f // Добавлено: задаем вес
                 )
+                adjustViewBounds = true // Добавлено: сохраняем пропорции изображения
+                scaleType = ImageView.ScaleType.CENTER_CROP // Добавлено: задаем тип масштабирования изображения
+                setPadding(10, 10, 10, 10) // Добавлено: задаем отступы
             }
 
-            val textView = TextView(this).apply {
-                text = "Text View"
+            val verticalLayout = LinearLayout(this).apply {
+                orientation = LinearLayout.VERTICAL
+                layoutParams = LinearLayout.LayoutParams(
+                    0, // Изменено на 0
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    2f // Добавлено: задаем вес
+                )
+                setPadding(10, 10, 10, 10) // Добавлено: задаем отступы
+            }
+
+            val textViewPrice = TextView(this).apply {
+                text = "${t.price} ₽" // Замените на поле с ценой унитаза в вашем классе Toilet
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                textSize = 20f // Добавлено: увеличиваем размер текста
+                setTypeface(null, Typeface.BOLD) // Добавлено: делаем текст жирным
+                setPadding(10, 10, 10, 10) // Добавлено: задаем отступы
+            }
+
+            val textViewDescription = TextView(this).apply {
+                text = t.description // Замените на поле с описанием унитаза в вашем классе Toilet
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                setPadding(10, 10, 10, 10) // Добавлено: задаем отступы
             }
 
             Picasso.get().load(t.imageUrl).into(imgView)
 
+            verticalLayout.addView(textViewPrice) // Добавлено: добавляем textViewPrice в вертикальный layout
+            verticalLayout.addView(textViewDescription) // Добавлено: добавляем textViewDescription в вертикальный layout
             horizontalLayout.addView(imgView)
+            horizontalLayout.addView(verticalLayout) // Изменено: добавляем вертикальный layout в горизонтальный layout
             layout.addView(horizontalLayout)
         }
     }
+
 
     fun openSecondActivity() {
         val intent = Intent(this, AddToiletActivity::class.java)

@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
@@ -17,10 +19,9 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import java.io.ByteArrayOutputStream
 
-
 class AddToiletActivity : AppCompatActivity() {
     private lateinit var priceEditText: EditText
-    private lateinit var lifespanEditText: EditText
+    private lateinit var lifespanEditText: AutoCompleteTextView
     private lateinit var descriptionEditText: EditText
     private lateinit var StandartCheckBox: CheckBox
     private lateinit var EliteCheckBox: CheckBox
@@ -50,6 +51,11 @@ class AddToiletActivity : AppCompatActivity() {
         VillageCheckBox = findViewById(R.id.checkBoxVillage)
         EcologicCheckBox = findViewById(R.id.checkBoxEcologic)
         NotStandartCheckBox = findViewById(R.id.checkBoxNotStandart)
+
+        // Настройка AutoCompleteTextView
+        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, arrayOf("Б/У", "Новый"))
+        lifespanEditText.setAdapter(adapter)
+        lifespanEditText.setOnClickListener { lifespanEditText.showDropDown() }
 
         imageButton.setOnClickListener {
             getImage()
@@ -94,11 +100,10 @@ class AddToiletActivity : AppCompatActivity() {
         }
     }
 
-
     private fun saveToiletData() {
         // Получение значений из полей ввода
         val price = priceEditText.text.toString().toInt()
-        val lifespan = lifespanEditText.text.toString().toInt()
+        val lifespan = lifespanEditText.text.toString() // Это теперь строка
         val description = descriptionEditText.text.toString()
 
         // Получение ссылки на базу данных
@@ -106,7 +111,7 @@ class AddToiletActivity : AppCompatActivity() {
         val toiletRef = database.getReference("Toilets")
 
         // Создание объекта унитаза
-        val toilet = Toilet(null, price, lifespan, null, description)
+        val toilet = Toilet(null, price, null, description)
         val newToiletRef = toiletRef.push()
         toilet.id = newToiletRef.key
         newToiletRef.setValue(toilet)

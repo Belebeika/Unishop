@@ -18,13 +18,21 @@
         android:id="@+id/editTextPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Цена" />
+        android:hint="Цена"
+        android:inputType="numberDecimal" />
 
-    <EditText
+
+
+    <AutoCompleteTextView
         android:id="@+id/editTextLifespan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Срок использования" />
+        android:hint="Срок использования"
+        android:editable="false"
+        android:clickable="true"
+        android:focusable="false" />
+    " />
+
 
     <EditText
         android:id="@+id/editTextDescription"
